@@ -28,6 +28,6 @@
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix --ext .jsx,.js",
-    "*.{js,ts,css,md,yaml,json}": "prettier --write"
+    "*.{js,ts,css,md,yaml}": "prettier --write"
   }
 }
