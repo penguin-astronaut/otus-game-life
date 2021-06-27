@@ -17,6 +17,7 @@ module.exports = {
   rules: {
     'no-continue': 'off',
     'no-console': 'off',
+    'class-methods-use-this': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': ['warn', 'never'],
   },
