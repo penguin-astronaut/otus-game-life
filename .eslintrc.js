@@ -20,5 +20,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': ['warn', 'never'],
+    '@typescript-eslint/no-var-requires': 'off',
   },
 };
