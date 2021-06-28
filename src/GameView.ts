@@ -1,4 +1,4 @@
-import { Field } from './types/Field';
+import { Field } from "./types/Field";
 
 export interface IGameView {
   updateGameField(field: Field): void;
@@ -27,19 +27,19 @@ export class GameView implements IGameView {
   }
 
   updateGameField(field: Field): void {
-    document.querySelector('.gameField').innerHTML = '';
+    document.querySelector(".gameField").innerHTML = "";
 
     field.forEach((row) => {
-      const tr: HTMLElement = document.createElement('tr');
+      const tr: HTMLElement = document.createElement("tr");
 
       row.forEach((col) => {
-        const td: HTMLElement = document.createElement('td');
-        const stateClass = col ? 'cell--alive' : 'cell--dead';
-        td.classList.add('cell', stateClass);
+        const td: HTMLElement = document.createElement("td");
+        const stateClass = col ? "cell--alive" : "cell--dead";
+        td.classList.add("cell", stateClass);
         tr.append(td);
       });
 
-      document.querySelector('.gameField').append(tr);
+      document.querySelector(".gameField").append(tr);
     });
   }
 
@@ -49,22 +49,22 @@ export class GameView implements IGameView {
     isRunning?: boolean;
   }): void {
     const { width, height, isRunning } = state;
-    const btnRun: HTMLElement = document.querySelector('.run-button');
+    const btnRun: HTMLElement = document.querySelector(".run-button");
     const inputWidth: HTMLInputElement = document.querySelector(
-      '.field-size.field-size--width',
+      ".field-size.field-size--width"
     );
     const inputHeight: HTMLInputElement = document.querySelector(
-      '.field-size.field-size--height',
+      ".field-size.field-size--height"
     );
     if (isRunning !== undefined) {
       if (isRunning) {
-        btnRun.classList.remove('run-button--stopped');
-        btnRun.classList.add('run-button--runned');
-        btnRun.innerHTML = 'Stop';
+        btnRun.classList.remove("run-button--stopped");
+        btnRun.classList.add("run-button--runned");
+        btnRun.innerHTML = "Stop";
       } else {
-        btnRun.classList.remove('run-button--runned');
-        btnRun.classList.add('run-button--stopped');
-        btnRun.innerHTML = 'Play';
+        btnRun.classList.remove("run-button--runned");
+        btnRun.classList.add("run-button--stopped");
+        btnRun.innerHTML = "Play";
       }
     }
 
@@ -78,10 +78,10 @@ export class GameView implements IGameView {
 
   onCellClick(cb: (x: number, y: number) => void): void {
     document
-      .querySelector('.gameField')
-      .addEventListener('click', (e: Event) => {
+      .querySelector(".gameField")
+      .addEventListener("click", (e: Event) => {
         const cell: HTMLTableCellElement = e.target as HTMLTableCellElement;
-        if (cell.tagName !== 'TD') {
+        if (cell.tagName !== "TD") {
           return;
         }
         const row: HTMLTableRowElement = cell.parentNode as HTMLTableRowElement;
@@ -94,27 +94,27 @@ export class GameView implements IGameView {
 
   onGameStateChange(cb: (newState: boolean) => void): void {
     document
-      .querySelector('.run-button')
-      .addEventListener('click', (e: MouseEvent) => {
+      .querySelector(".run-button")
+      .addEventListener("click", (e: MouseEvent) => {
         const btnRun = e.target as HTMLElement;
-        const newState = btnRun.innerHTML === 'Play';
+        const newState = btnRun.innerHTML === "Play";
         cb(newState);
       });
   }
 
   onFieldSizeChange(cb: (width: number, height: number) => void): void {
     document
-      .querySelector('.gameControls')
-      .addEventListener('change', (e: Event) => {
+      .querySelector(".gameControls")
+      .addEventListener("change", (e: Event) => {
         const input = e.target as HTMLInputElement;
-        if (!input.classList.contains('field-size')) {
+        if (!input.classList.contains("field-size")) {
           return;
         }
         const inputWidth: HTMLInputElement = document.querySelector(
-          '.field-size.field-size--width',
+          ".field-size.field-size--width"
         );
         const inputHeight: HTMLInputElement = document.querySelector(
-          '.field-size.field-size--height',
+          ".field-size.field-size--height"
         );
         const width = Number(inputWidth.value);
         const height = Number(inputHeight.value);

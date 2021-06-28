@@ -1,4 +1,4 @@
-import { Field } from './types/Field';
+import { Field } from "./types/Field";
 
 export interface IGameField {
   getState(): number[][];
@@ -73,9 +73,10 @@ export class GameField implements IGameField {
       for (let columnNumber = 0; columnNumber < width; columnNumber += 1) {
         let val = 0;
         if (this.state) {
-          val = this.state[rowNumber] && this.state[rowNumber][columnNumber]
-            ? this.state[rowNumber][columnNumber]
-            : 0;
+          val =
+            this.state[rowNumber] && this.state[rowNumber][columnNumber]
+              ? this.state[rowNumber][columnNumber]
+              : 0;
         }
         row[columnNumber] = val;
       }
