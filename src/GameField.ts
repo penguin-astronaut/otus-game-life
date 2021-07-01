@@ -36,11 +36,11 @@ export class GameField implements IGameField {
     return this.state;
   }
 
-  toggleCellState(x: number, y: number): void {
+  toggleCellState = (x: number, y: number): void => {
     if (this.state[y] !== undefined && this.state[y][x] !== undefined) {
       this.state[y][x] = Number(!this.state[y][x]);
     }
-  }
+  };
 
   nextGeneration(): void {
     const result: Field = [];
