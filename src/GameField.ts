@@ -65,7 +65,7 @@ export class GameField implements IGameField {
     this.state = result;
   }
 
-  setSize(width: number, height: number): void {
+  setSize = (width: number, height: number): void => {
     const state: Field = [];
 
     for (let rowNumber = 0; rowNumber < height; rowNumber += 1) {
@@ -84,5 +84,5 @@ export class GameField implements IGameField {
       state[rowNumber] = row;
     }
     this.state = state;
-  }
+  };
 }
