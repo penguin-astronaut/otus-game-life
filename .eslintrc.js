@@ -21,6 +21,7 @@ module.exports = {
     "class-methods-use-this": "off",
     "import/no-unresolved": "off",
     "import/extensions": ["warn", "never"],
+    "import/prefer-default-export": "off",
     "@typescript-eslint/no-var-requires": "off",
   },
 };

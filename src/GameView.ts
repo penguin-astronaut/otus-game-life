@@ -10,6 +10,7 @@ export interface IGameView {
   onCellClick(cb: (x: number, y: number) => void): void;
   onGameStateChange(cb: (newState: boolean) => void): void;
   onFieldSizeChange(cb: (width: number, height: number) => void): void;
+  onSpeedChange(cb: (timeMs: number) => void): void;
 }
 
 export class GameView implements IGameView {
@@ -21,19 +22,20 @@ export class GameView implements IGameView {
         <button class='run-button run-button--stopped'>Play</button>
         <input type='number' class='field-size field-size--width'/>
         <input type='number' class='field-size field-size--height'/>
+        <input type='range' class='field-speed' min="100" max="50000" />
       </div>
     `;
     document.body.appendChild(element);
   }
 
-  updateGameField(field: Field): void {
+  updateGameField = (field: Field): void => {
     document.querySelector(".gameField").innerHTML = "";
 
     field.forEach((row) => {
-      const tr: HTMLElement = document.createElement("tr");
+      const tr = document.createElement("tr");
 
       row.forEach((col) => {
-        const td: HTMLElement = document.createElement("td");
+        const td = document.createElement("td");
         const stateClass = col ? "cell--alive" : "cell--dead";
         td.classList.add("cell", stateClass);
         tr.append(td);
@@ -41,14 +43,15 @@ export class GameView implements IGameView {
 
       document.querySelector(".gameField").append(tr);
     });
-  }
+  };
 
   updateGameState(state: {
     width?: number;
     height?: number;
     isRunning?: boolean;
+    speed?: number;
   }): void {
-    const { width, height, isRunning } = state;
+    const { width, height, isRunning, speed } = state;
     const btnRun: HTMLElement = document.querySelector(".run-button");
     const inputWidth: HTMLInputElement = document.querySelector(
       ".field-size.field-size--width"
@@ -73,6 +76,10 @@ export class GameView implements IGameView {
     }
     if (height !== undefined) {
       inputHeight.value = state.height.toString();
+    }
+
+    if (speed !== undefined) {
+      inputHeight.value = state.speed.toString();
     }
   }
 
@@ -120,5 +127,12 @@ export class GameView implements IGameView {
         const height = Number(inputHeight.value);
         cb(width, height);
       });
+  }
+
+  onSpeedChange(cb: (timeMs: number) => void): void {
+    document.querySelector(".field-speed").addEventListener("change", () => {
+      const elem = document.querySelector(".field-speed") as HTMLInputElement;
+      cb(Number(elem.value));
+    });
   }
 }

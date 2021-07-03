@@ -28,6 +28,7 @@ describe("GameView", () => {
       expect(gameView.onCellClick).toBeInstanceOf(Function);
       expect(gameView.onGameStateChange).toBeInstanceOf(Function);
       expect(gameView.onFieldSizeChange).toBeInstanceOf(Function);
+      expect(gameView.onSpeedChange).toBeInstanceOf(Function);
     });
   });
 
@@ -216,6 +217,20 @@ describe("GameView", () => {
           })
         );
         expect(onFieldSizeChange).toHaveBeenCalledWith(width, height);
+      });
+    });
+
+    it("calls onSpeedChange on button 'Change speed' click", () => {
+      const onSpeedChange = jest.fn();
+      gameView.onSpeedChange(onSpeedChange);
+      const speedInput = document.querySelector(
+        "input[type='range'].field-speed"
+      ) as HTMLInputElement;
+
+      [2000, 3000, 5000].forEach((speed) => {
+        speedInput.value = speed.toString();
+        speedInput.dispatchEvent(new Event("change"));
+        expect(onSpeedChange).toHaveBeenCalledWith(speed);
       });
     });
   });

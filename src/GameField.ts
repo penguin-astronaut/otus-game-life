@@ -14,7 +14,7 @@ export class GameField implements IGameField {
     this.setSize(width, height);
   }
 
-  countAliveAround(x: number, y: number): number {
+  countAliveAround = (x: number, y: number): number => {
     let count = 0;
     for (let rowNumber = y - 1; rowNumber <= y + 1; rowNumber += 1) {
       if (this.state[rowNumber] === undefined) {
@@ -30,11 +30,9 @@ export class GameField implements IGameField {
       }
     }
     return count;
-  }
+  };
 
-  getState(): number[][] {
-    return this.state;
-  }
+  getState = (): Field => this.state;
 
   toggleCellState = (x: number, y: number): void => {
     if (this.state[y] !== undefined && this.state[y][x] !== undefined) {
@@ -42,7 +40,7 @@ export class GameField implements IGameField {
     }
   };
 
-  nextGeneration(): void {
+  nextGeneration = (): void => {
     const result: Field = [];
 
     for (let row = 0; row < this.state.length; row += 1) {
@@ -63,7 +61,7 @@ export class GameField implements IGameField {
     }
 
     this.state = result;
-  }
+  };
 
   setSize = (width: number, height: number): void => {
     const state: Field = [];
