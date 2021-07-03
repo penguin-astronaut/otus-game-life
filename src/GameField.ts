@@ -32,7 +32,18 @@ export class GameField implements IGameField {
     return count;
   };
 
-  getState = (): Field => this.state;
+  getState = (): Field => {
+    const nextState = this.getNextGeneration();
+    for (let row = 0; row < this.state.length; row += 1) {
+      for (let col = 0; col < this.state[0].length; col += 1) {
+        if (this.state[row][col] === 1 && nextState[row][col] === 0) {
+          this.state[row][col] = 2;
+        }
+      }
+    }
+
+    return this.state;
+  };
 
   toggleCellState = (x: number, y: number): void => {
     if (this.state[y] !== undefined && this.state[y][x] !== undefined) {
@@ -41,6 +52,10 @@ export class GameField implements IGameField {
   };
 
   nextGeneration = (): void => {
+    this.state = this.getNextGeneration();
+  };
+
+  getNextGeneration = (): Field => {
     const result: Field = [];
 
     for (let row = 0; row < this.state.length; row += 1) {
@@ -59,8 +74,7 @@ export class GameField implements IGameField {
         }
       }
     }
-
-    this.state = result;
+    return result;
   };
 
   setSize = (width: number, height: number): void => {

@@ -15,3 +15,7 @@
 .cell--dead {
   background-color: darkgrey;
 }
+
+.cell--undead {
+  background-color: coral;
+}

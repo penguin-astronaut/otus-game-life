@@ -6,6 +6,7 @@ export interface IGameView {
     width?: number;
     height?: number;
     isRunning?: boolean;
+    speed?: number;
   }): void;
   onCellClick(cb: (x: number, y: number) => void): void;
   onGameStateChange(cb: (newState: boolean) => void): void;
@@ -22,7 +23,7 @@ export class GameView implements IGameView {
         <button class='run-button run-button--stopped'>Play</button>
         <input type='number' class='field-size field-size--width'/>
         <input type='number' class='field-size field-size--height'/>
-        <input type='range' class='field-speed' min="100" max="50000" />
+        <input type='range' class='field-speed' min="100" max="3000" />
       </div>
     `;
     document.body.appendChild(element);
@@ -36,7 +37,14 @@ export class GameView implements IGameView {
 
       row.forEach((col) => {
         const td = document.createElement("td");
-        const stateClass = col ? "cell--alive" : "cell--dead";
+        let stateClass: string;
+        if (col === 2) {
+          stateClass = "cell--undead";
+        } else if (col === 1) {
+          stateClass = "cell--alive";
+        } else {
+          stateClass = "cell--dead";
+        }
         td.classList.add("cell", stateClass);
         tr.append(td);
       });
@@ -59,6 +67,7 @@ export class GameView implements IGameView {
     const inputHeight: HTMLInputElement = document.querySelector(
       ".field-size.field-size--height"
     );
+    const inputSpeed: HTMLInputElement = document.querySelector(".field-speed");
     if (isRunning !== undefined) {
       if (isRunning) {
         btnRun.classList.remove("run-button--stopped");
@@ -79,7 +88,7 @@ export class GameView implements IGameView {
     }
 
     if (speed !== undefined) {
-      inputHeight.value = state.speed.toString();
+      inputSpeed.value = state.speed.toString();
     }
   }
 
@@ -88,9 +97,6 @@ export class GameView implements IGameView {
       .querySelector(".gameField")
       .addEventListener("click", (e: Event) => {
         const cell: HTMLTableCellElement = e.target as HTMLTableCellElement;
-        if (cell.tagName !== "TD") {
-          return;
-        }
         const row: HTMLTableRowElement = cell.parentNode as HTMLTableRowElement;
         const x = cell.cellIndex;
         const y = row.rowIndex;

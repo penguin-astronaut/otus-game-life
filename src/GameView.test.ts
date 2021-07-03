@@ -40,12 +40,13 @@ describe("GameView", () => {
 
     it("renders field from .updateGameField", () => {
       gameView.updateGameField([
-        [0, 1],
-        [1, 0],
+        [0, 1, 2],
+        [1, 0, 1],
       ]);
-      expect(document.querySelectorAll(".cell").length).toBe(4);
-      expect(document.querySelectorAll(".cell.cell--alive").length).toBe(2);
+      expect(document.querySelectorAll(".cell").length).toBe(6);
+      expect(document.querySelectorAll(".cell.cell--alive").length).toBe(3);
       expect(document.querySelectorAll(".cell.cell--dead").length).toBe(2);
+      expect(document.querySelectorAll(".cell.cell--undead").length).toBe(1);
       gameView.updateGameField([
         [0, 0],
         [1, 0],
@@ -56,11 +57,14 @@ describe("GameView", () => {
       gameView.updateGameField([
         [0, 0, 1],
         [1, 0, 1],
+        [2, 2, 1],
       ]);
-      expect(document.querySelectorAll(".cell").length).toBe(6);
-      expect(document.querySelectorAll(".cell.cell--alive").length).toBe(3);
+      expect(document.querySelectorAll(".cell").length).toBe(9);
+      expect(document.querySelectorAll(".cell.cell--alive").length).toBe(4);
       expect(document.querySelectorAll(".cell.cell--dead").length).toBe(3);
+      expect(document.querySelectorAll(".cell.cell--undead").length).toBe(2);
     });
+
     it("calls funciton from .onCellClick on field interaction", () => {
       const onCellClick = jest.fn();
       gameView.onCellClick(onCellClick);
@@ -142,7 +146,13 @@ describe("GameView", () => {
           ).value
         )
       ).toBe(6);
+
+      gameView.updateGameState({ speed: 900 });
+      expect(
+        (document.querySelector(".field-speed") as HTMLInputElement).value
+      ).toBe("900");
     });
+
     it("calls function from .onGameStateChange on control interaction", () => {
       const onGameStateChange = jest.fn();
       gameView.onGameStateChange(onGameStateChange);
@@ -192,6 +202,17 @@ describe("GameView", () => {
         expect(onFieldSizeChange).toHaveBeenCalledWith(width, height);
       });
 
+      (
+        document.querySelector(
+          "input[type='range'].field-speed"
+        ) as HTMLInputElement
+      ).dispatchEvent(
+        new Event("change", {
+          bubbles: true,
+        })
+      );
+      expect(onFieldSizeChange).toHaveBeenCalledTimes(3);
+
       [
         [101, 103],
         [104, 105],
@@ -227,7 +248,7 @@ describe("GameView", () => {
         "input[type='range'].field-speed"
       ) as HTMLInputElement;
 
-      [2000, 3000, 5000].forEach((speed) => {
+      [2000, 1500, 3000].forEach((speed) => {
         speedInput.value = speed.toString();
         speedInput.dispatchEvent(new Event("change"));
         expect(onSpeedChange).toHaveBeenCalledWith(speed);

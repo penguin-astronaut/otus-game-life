@@ -7,3 +7,4 @@ import "./style.css";
 const gameField = new GameField(5, 5);
 const gameView = new GameView(document.querySelector("#app"));
 const game = new Game(gameField, gameView, 500);
+game.run();
