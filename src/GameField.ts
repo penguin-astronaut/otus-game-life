@@ -1,7 +1,7 @@
 import { Field } from "./types/Field";
 
 export interface IGameField {
-  getState(): number[][];
+  getState(withNext?: boolean): number[][];
   toggleCellState(x: number, y: number): void;
   nextGeneration(): void;
   setSize(width: number, height: number): void;
@@ -32,7 +32,11 @@ export class GameField implements IGameField {
     return count;
   };
 
-  getState = (): Field => {
+  getState = (withNext = true): Field => {
+    if (!withNext) {
+      return this.state;
+    }
+
     const nextState = this.getNextGeneration();
     for (let row = 0; row < this.state.length; row += 1) {
       for (let col = 0; col < this.state[0].length; col += 1) {
@@ -41,13 +45,14 @@ export class GameField implements IGameField {
         }
       }
     }
-
     return this.state;
   };
 
   toggleCellState = (x: number, y: number): void => {
-    if (this.state[y] !== undefined && this.state[y][x] !== undefined) {
-      this.state[y][x] = Number(!this.state[y][x]);
+    if (this.state[y][x] === 0) {
+      this.state[y][x] = 1;
+    } else {
+      this.state[y][x] = 0;
     }
   };
 
@@ -79,20 +84,19 @@ export class GameField implements IGameField {
 
   setSize = (width: number, height: number): void => {
     const state: Field = [];
-
     for (let rowNumber = 0; rowNumber < height; rowNumber += 1) {
       const row: Array<number> = [];
       for (let columnNumber = 0; columnNumber < width; columnNumber += 1) {
         let val = 0;
         if (this.state) {
           val =
-            this.state[rowNumber] && this.state[rowNumber][columnNumber]
+            this.state[rowNumber] &&
+            this.state[rowNumber][columnNumber] !== undefined
               ? this.state[rowNumber][columnNumber]
               : 0;
         }
         row[columnNumber] = val;
       }
-
       state[rowNumber] = row;
     }
     this.state = state;

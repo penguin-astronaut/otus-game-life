@@ -37,13 +37,13 @@ describe("GameField", () => {
       gameField.toggleCellState(x1, y1);
       gameField.toggleCellState(x2, y2);
       expect(gameField.getState()).toEqual([
-        [1, 0],
+        [2, 0],
         [0, 0],
-        [0, 1],
+        [0, 2],
       ]);
       gameField.toggleCellState(x2, y2);
       expect(gameField.getState()).toEqual([
-        [1, 0],
+        [2, 0],
         [0, 0],
         [0, 0],
       ]);
@@ -56,9 +56,9 @@ describe("GameField", () => {
       gameField.toggleCellState(x1, y1);
       gameField.toggleCellState(x2, y2);
       expect(gameField.getState()).toEqual([
-        [1, 0],
+        [2, 0],
         [0, 0],
-        [0, 1],
+        [0, 2],
       ]);
       gameField.nextGeneration();
       expect(gameField.getState()).toEqual([
@@ -87,20 +87,20 @@ describe("GameField", () => {
       gameField.toggleCellState(1, 1);
       gameField.toggleCellState(0, 2);
       expect(gameField.getState()).toEqual([
-        [1, 0],
+        [2, 0],
         [0, 1],
-        [1, 0],
+        [2, 0],
       ]);
       gameField.setSize(3, 4);
-      expect(gameField.getState()).toEqual([
-        [1, 0, 0],
+      expect(gameField.getState(false)).toEqual([
+        [2, 0, 0],
         [0, 1, 0],
-        [1, 0, 0],
+        [2, 0, 0],
         [0, 0, 0],
       ]);
       gameField.setSize(2, 2);
-      expect(gameField.getState()).toEqual([
-        [1, 0],
+      expect(gameField.getState(false)).toEqual([
+        [2, 0],
         [0, 1],
       ]);
     });

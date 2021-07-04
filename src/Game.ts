@@ -42,7 +42,7 @@ export class Game {
 
     this.gameView.onFieldSizeChange((width: number, height: number): void => {
       this.gameField.setSize(width, height);
-      this.gameView.updateGameField(this.gameField.getState());
+      this.gameView.updateGameField(this.gameField.getState(false));
       this.gameView.updateGameState({ width, height });
     });
 
