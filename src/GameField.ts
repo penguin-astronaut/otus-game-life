@@ -42,9 +42,12 @@ export class GameField implements IGameField {
       for (let col = 0; col < this.state[0].length; col += 1) {
         if (this.state[row][col] === 1 && nextState[row][col] === 0) {
           this.state[row][col] = 2;
+        } else if (this.state[row][col] === 2 && nextState[row][col] === 1) {
+          this.state[row][col] = 1;
         }
       }
     }
+
     return this.state;
   };
 
