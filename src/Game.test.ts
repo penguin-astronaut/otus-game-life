@@ -141,5 +141,11 @@ describe("Game", () => {
       expect(gameView.updateGameField).toHaveBeenCalledTimes(3);
       expect(gameField.nextGeneration).toHaveBeenCalledTimes(2);
     });
+
+    it("on speed change", async () => {
+      onSpeedChange(5000);
+      expect(game.speed).toBe(5000);
+      expect(gameView.updateGameField).toHaveBeenCalledWith(state);
+    });
   });
 });

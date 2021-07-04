@@ -11,7 +11,7 @@ export interface IGame {
 export class Game {
   private interval: any;
 
-  private speed: number;
+  public speed: number;
 
   private gameField: IGameField;
 
