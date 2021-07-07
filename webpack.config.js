@@ -4,18 +4,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: "./src/index.ts",
-  target: "es5",
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
-
+  target: "web",
   devServer: {
     compress: true,
+    hot: true,
     port: 9000,
   },
-
   module: {
     rules: [
       {
