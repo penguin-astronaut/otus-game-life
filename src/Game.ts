@@ -74,6 +74,10 @@ export class Game {
     }
   };
 
+  getSpeed = (): number => this.speed;
+
+  getStatus = (): boolean => this.isRunning;
+
   private runInterval = (): void => {
     this.interval = window.setInterval(() => {
       this.gameState.nextGeneration();
