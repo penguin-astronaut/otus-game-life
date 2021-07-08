@@ -1,22 +1,75 @@
-.gameField {
-  border: 1px solid black;
-  table-layout: fixed;
+:root {
+  --border-color: #c8d2d5;
 }
-.cell {
-  border: 1px solid black;
-  width: 30px;
-  height: 30px;
+#app {
+  display: flex;
+  flex-direction: column;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  border-left: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+  margin-bottom: 15px;
+}
+.field__row {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+}
+.field__col {
+  width: 20px;
+  height: 20px;
+  background-color: aliceblue;
+  border-right: 1px solid var(--border-color);
+  cursor: pointer;
 }
 
-.cell--alive {
+.field__col--undead {
+  background-color: crimson;
+}
+
+.field__col--alive {
   background-color: aquamarine;
 }
 
-.cell--dead {
-  background-color: darkgrey;
+.controls-buttons {
+  display: flex;
+  margin-top: 10px;
 }
 
-.cell--undead {
-  background-color: coral;
+.controls__play,
+.controls__clear {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  font-size: 18px;
+  background-color: burlywood;
+  color: #fff;
+}
+
+.controls__play {
+  margin-right: 20px;
+  background-color: lightseagreen;
+}
+
+.controls__play::before {
+  content: "Start";
+}
+
+.controls__play--stop {
+  background-color: tomato;
+}
+
+.controls__play--stop::before {
+  content: "Stop";
+}
+
+.controls__size {
+  margin-bottom: 10px;
 }
 
