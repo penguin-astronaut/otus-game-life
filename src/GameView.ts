@@ -6,8 +6,8 @@ export class GameView {
       <div class="field"></div>
       <div class="controls">
         <div class="controls-size">
-          <label>Col: <input class="controls-size__item controls-size__item--col" type="number"></label>
-          <label>Row: <input class="controls-size__item controls-size__item--row" type="number"></label>
+          <label>Col: <input class="controls-size__item controls-size__item--col" type="number" min=3></label>
+          <label>Row: <input class="controls-size__item controls-size__item--row" type="number" min=3></label>
         </div>
         <label>Speed <input class="controls__speed" type="range" min=0 max=99></label>
         <div class="controls-buttons">
@@ -113,8 +113,8 @@ export class GameView {
         const inputHeight: HTMLInputElement = document.querySelector(
           ".controls-size__item--row"
         );
-        const width = Number(inputWidth.value);
-        const height = Number(inputHeight.value);
+        const width = Math.abs(Number(inputWidth.value));
+        const height = Math.abs(Number(inputHeight.value));
         cb(width, height);
       });
   }

@@ -2,6 +2,10 @@ import { GameState } from "./GameState";
 import { GameView } from "./GameView";
 
 export class Game {
+  private DEFAULT_COLS = 10;
+
+  private DEFAULT_ROWS = 10;
+
   private interval: number;
 
   public speed: number;
@@ -42,9 +46,11 @@ export class Game {
     });
 
     this.gameView.onFieldSizeChange((cols: number, rows: number): void => {
-      this.gameState.setSize(cols, rows);
+      const newCols = cols === 0 ? this.DEFAULT_COLS : cols;
+      const newRows = rows === 0 ? this.DEFAULT_ROWS : rows;
+      this.gameState.setSize(newCols, newRows);
       this.gameView.updateField(this.gameState.getState(false));
-      this.gameView.updateActionsValues({ cols, rows });
+      this.gameView.updateActionsValues({ cols: newCols, rows: newRows });
     });
 
     this.gameView.onGameStateChange((newState: boolean): void => {
@@ -104,9 +110,12 @@ export class Game {
           item.reduce((accIn: number, itemIn: number) => accIn + itemIn, 0),
         0
       );
-      this.gameView.updateField(stateNew);
-      if (!sum) {
+      if (!sum || this.gameState.checkReplayState()) {
+        this.gameState.clearState();
+        this.gameView.updateField(stateNew);
         this.stop();
+      } else {
+        this.gameView.updateField(stateNew);
       }
     }, this.speed);
   };

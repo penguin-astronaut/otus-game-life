@@ -67,23 +67,27 @@ export class GameState {
     }
   };
 
+  checkReplayState = (): boolean => {
+    const nextState = this.getNextGeneration();
+    const stateAfterTwoMoves = this.getNextGeneration(nextState);
+    return this.state.join().replace(/2/g, "1") === stateAfterTwoMoves.join();
+  };
+
   nextGeneration = (): void => {
     this.state = this.getNextGeneration();
   };
 
-  private getNextGeneration = (): Field => {
+  private getNextGeneration = (state?: Field): Field => {
     const result: Field = [];
-
-    for (let row = 0; row < this.state.length; row += 1) {
+    const curState = state ?? this.state;
+    for (let row = 0; row < curState.length; row += 1) {
       result[row] = [];
 
-      for (let col = 0; col < this.state[row].length; col += 1) {
-        const liveAround = this.countAliveAround(col, row);
-        const cell = this.state[row][col];
+      for (let col = 0; col < curState[row].length; col += 1) {
+        const liveAround = this.countAliveAround(col, row, curState);
+        const cell = curState[row][col];
 
-        if (liveAround === 3) {
-          result[row][col] = 1;
-        } else if (cell && liveAround === 2) {
+        if (liveAround === 3 || (cell && liveAround === 2)) {
           result[row][col] = 1;
         } else {
           result[row][col] = 0;
@@ -93,10 +97,14 @@ export class GameState {
     return result;
   };
 
-  private countAliveAround = (col: number, row: number): number => {
+  private countAliveAround = (
+    col: number,
+    row: number,
+    state: Field
+  ): number => {
     let count = 0;
     for (let rowNumber = row - 1; rowNumber <= row + 1; rowNumber += 1) {
-      if (this.state[rowNumber] === undefined) {
+      if (state[rowNumber] === undefined) {
         continue;
       }
       for (
@@ -107,7 +115,7 @@ export class GameState {
         if (row === rowNumber && col === columnNumber) {
           continue;
         }
-        if (this.state[rowNumber][columnNumber]) {
+        if (state[rowNumber][columnNumber]) {
           count += 1;
         }
       }
