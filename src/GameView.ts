@@ -9,7 +9,7 @@ export class GameView {
           <label>Col: <input class="controls-size__item controls-size__item--col" type="number"></label>
           <label>Row: <input class="controls-size__item controls-size__item--row" type="number"></label>
         </div>
-        <label>Speed <input class="controls__speed" type="range" min=100 max="5000"></label>
+        <label>Speed <input class="controls__speed" type="range" min=0 max=99></label>
         <div class="controls-buttons">
           <button class="controls__play"></button>
           <button class="controls__clear">Clear Field</button>

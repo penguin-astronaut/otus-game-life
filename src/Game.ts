@@ -12,10 +12,18 @@ export class Game {
 
   private isRunning: boolean;
 
-  constructor(gameState: GameState, gameView: GameView, speed = 2000) {
+  private maxSpeed: number;
+
+  constructor(
+    gameState: GameState,
+    gameView: GameView,
+    speed = 1000,
+    maxSpeed = 2000
+  ) {
     this.gameState = gameState;
     this.gameView = gameView;
     this.speed = speed;
+    this.maxSpeed = maxSpeed;
   }
 
   run = (): void => {
@@ -25,7 +33,7 @@ export class Game {
       isRunning: false,
       cols: state[0].length,
       rows: state.length,
-      speed: this.speed,
+      speed: this.speedMsToPercent(),
     });
 
     this.gameView.onCellClick((x: number, y: number): void => {
@@ -67,7 +75,7 @@ export class Game {
   };
 
   updateSpeed = (speed: number): void => {
-    this.speed = speed;
+    this.speed = this.speedPercentToMs(speed);
     if (this.isRunning) {
       clearInterval(this.interval);
       this.runInterval();
@@ -77,6 +85,14 @@ export class Game {
   getSpeed = (): number => this.speed;
 
   getStatus = (): boolean => this.isRunning;
+
+  private speedMsToPercent(): number {
+    return 100 - Math.round(this.speed / (this.maxSpeed / 100));
+  }
+
+  private speedPercentToMs(percent: number): number {
+    return Math.round(this.maxSpeed - percent * (this.maxSpeed / 100));
+  }
 
   private runInterval = (): void => {
     this.interval = window.setInterval(() => {

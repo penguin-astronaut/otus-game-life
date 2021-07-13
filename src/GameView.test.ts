@@ -53,11 +53,11 @@ describe("game View", () => {
       cols: 5,
       rows: 10,
       isRunning: true,
-      speed: 2000,
+      speed: 20,
     });
     expect(
       (document.querySelector(".controls__speed") as HTMLInputElement).value
-    ).toBe("2000");
+    ).toBe("20");
     expect(
       (document.querySelector(".controls-size__item--col") as HTMLInputElement)
         .value
@@ -127,10 +127,10 @@ describe("game View", () => {
     const speedRange = document.querySelector(
       ".controls__speed"
     ) as HTMLInputElement;
-    speedRange.value = "1000";
+    speedRange.value = "40";
     document
       .querySelector(".controls__speed")
       .dispatchEvent(new Event("change"));
-    expect(myCb).toHaveBeenCalledWith(1000);
+    expect(myCb).toHaveBeenCalledWith(40);
   });
 });

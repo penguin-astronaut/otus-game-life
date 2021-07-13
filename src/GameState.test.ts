@@ -22,7 +22,7 @@ describe("game View", () => {
     gameState.changeCellState(0, 1);
     gameState.changeCellState(0, 2);
     gameState.changeCellState(3, 4);
-    console.log(gameState.getState(false));
+
     expect(gameState.getState(false)).toEqual([
       [1, 0, 0, 0, 0],
       [1, 0, 0, 0, 0],

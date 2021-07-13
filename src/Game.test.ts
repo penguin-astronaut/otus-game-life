@@ -36,10 +36,10 @@ describe("Game", () => {
 
   it("changeState speed in View and in Game", () => {
     const elem = document.querySelector(".controls__speed") as HTMLInputElement;
-    elem.value = "1500";
+    elem.value = "40";
     expect(game.getSpeed()).toBe(speed);
     elem.dispatchEvent(new Event("change"));
-    expect(game.getSpeed()).toBe(1500);
+    expect(game.getSpeed()).toBe(1200);
   });
 
   it("changeSize", () => {

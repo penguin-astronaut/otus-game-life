@@ -8,7 +8,7 @@
     "lint": "prettier --check . && eslint . --ext .jsx,.js",
     "lint:fix": "prettier --write . && eslint . --ext .jsx,.js --fix",
     "prepare": "husky install",
-    "build": "webpack --mode=production",
+    "build": "webpack --mode=production --target=es5",
     "serve": "webpack serve --mode=development"
   },
   "keywords": [],
